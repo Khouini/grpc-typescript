@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package users;
+
+import "google/protobuf/empty.proto";
+
+message User {
+    int32 supplier_id = 1;
+    string hotel_id = 2;
+    int32 giata_id = 3;
+    string name = 4;
+    int32 rating = 5;
+    string address = 6;
+    string hotel_chain_id = 7;
+    string category = 8;
+    string city = 9;
+    int32 city_id = 10;
+    string zone = 11;
+    string zone_id = 12;
+    string country = 13;
+    string country_code = 14;
+    string latitude = 15;  // Adjusted field name for clarity
+    string longitude = 16; // Adjusted field name for clarity
+    string currency = 17;
+    repeated string photos = 18;
+    float score = 19;  // Changed to float to allow decimal values
+    int32 min_rate = 20;
+    int32 max_rate = 21;
+    repeated Room rooms = 22;
+    string search_code = 23;
+}
+
+message Room {
+    string code = 1;
+    string name = 2;
+    repeated Rate rates = 3;
+}
+
+message Rate {
+    string payment_type = 1;
+    int32 allotment = 2;
+    int32 rooms = 3;
+    string board_name = 4;
+    string board_code = 5;
+    bool nrf = 6;
+    int32 amount = 7;
+    repeated CancellationPolicy cancellation_policies = 8;
+    repeated string offers = 9;
+    repeated string promotions = 10;
+    repeated string taxes = 11;
+    string adults = 12;
+    string infant = 13;
+    string children = 14;
+    string children_ages = 15;
+    string rate_key = 16;
+}
+
+message CancellationPolicy {
+    string from = 1;
+    int32 amount = 2;
+}
+
+
+service Users {
+    rpc GetUsers(google.protobuf.Empty) returns (stream User) {};
+} 
