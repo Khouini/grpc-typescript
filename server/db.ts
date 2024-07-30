@@ -1,6 +1,21 @@
 import { User, Room, Rate, CancellationPolicy } from '../proto/users_pb';
+function duplicateArray<T>(data: T[], nbDuplicates: number): T[] {
+  if (nbDuplicates <= 0) {
+    throw new Error('nbDuplicates must be a positive number');
+  }
 
-import data from './corrected_hotels.json';
+  const result: T[] = [];
+
+  for (let i = 0; i < nbDuplicates; i++) {
+    result.push(...data);
+  }
+
+  return result;
+}
+
+import dataQ from './corrected_hotels.json';
+console.log('duplication');
+const data = duplicateArray(dataQ, 4);
 console.log(data?.length);
 export function hotelToClass(hotelData: any): User {
   const hotel = new User();

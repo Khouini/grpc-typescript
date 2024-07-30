@@ -11,11 +11,14 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "grpc": "^1.24.3"
+    "grpc": "^1.24.3",
+    "nodemon": "^3.1.4"
   },
   "scripts": {
     "build": "sh proto/build.sh",
     "server": "ts-node server/index.ts",
-    "client": "ts-node client/index.ts"
+    "client": "ts-node client/index.ts",
+    "devServer": "nodemon --watch 'src/**/*.ts' --exec ts-node server/index.ts",
+    "devClient": "nodemon --watch 'src/**/*.ts' --exec ts-node client/index.ts"
   }
 }
