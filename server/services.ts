@@ -1,42 +1,33 @@
-import { ServerWritableStream } from 'grpc';
+import { ServerUnaryCall, sendUnaryData } from 'grpc';
 import { Empty } from 'google-protobuf/google/protobuf/empty_pb';
-
 import { IUsersServer } from '../proto/users_grpc_pb';
+import { User, UsersList } from '../proto/users_pb'; // Ensure you import UsersList from the correct file
 import { users } from './db';
 
 export class UsersServer implements IUsersServer {
-  getUsers(call: ServerWritableStream<Empty>) {
-    console.log(`getUsers: streaming all users.`);
+  getUsers(call: ServerUnaryCall<Empty>, callback: sendUnaryData<UsersList>): void {
+    console.log(`getUsers: fetching all users.`);
 
-    // Flag to indicate if an error has occurred
-    let hasErrorOccurred = false;
+    try {
+      // Create a new UsersList message
+      const usersList = new UsersList();
 
-    // Function to handle the streaming of users
-    const streamUsers = () => {
-      try {
-        for (const user of users) {
-          if (hasErrorOccurred) {
-            // Stop sending more users if an error has occurred
-            return;
-          }
-          // console.log(`getUsers: sending user ${user.getName()}`);
-          call.write(user);
-        }
-        call.end();
-      } catch (error) {
-        console.error(`getUsers: error while streaming users: ${error.message}`);
-        call.destroy(new Error('Internal server error'));
-      }
-    };
+      usersList.setUsersList(users);
+      // Add each user to the UsersList
+      // users.forEach(user => {
+      //   usersList.addUsers(user); // Add each User to the UsersList
+      // });
 
-    // Attach an error handler to the call object
-    call.on('error', error => {
-      console.error(`getUsers: client error: ${error.message}`);
-      hasErrorOccurred = true;
-      // Handle any additional cleanup or error logging if needed
-    });
+      // Send the UsersList to the client
+      callback(null, usersList);
+      usersList.clearUsersList();
+    } catch (error) {
+      console.error(`getUsers: error while fetching users: ${error.message}`);
 
-    // Start streaming users
-    streamUsers();
+      // callback({
+      //   code: grpc.status.INTERNAL,
+      //   details: 'Internal server error'
+      // }, null);
+    }
   }
 }

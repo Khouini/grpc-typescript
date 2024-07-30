@@ -12,29 +12,31 @@ interface IUsersService extends grpc.ServiceDefinition<grpc.UntypedServiceImplem
     getUsers: IUsersService_IGetUsers;
 }
 
-interface IUsersService_IGetUsers extends grpc.MethodDefinition<google_protobuf_empty_pb.Empty, users_pb.User> {
+interface IUsersService_IGetUsers extends grpc.MethodDefinition<google_protobuf_empty_pb.Empty, users_pb.UsersList> {
     path: string; // "/users.Users/GetUsers"
     requestStream: false;
-    responseStream: true;
+    responseStream: false;
     requestSerialize: grpc.serialize<google_protobuf_empty_pb.Empty>;
     requestDeserialize: grpc.deserialize<google_protobuf_empty_pb.Empty>;
-    responseSerialize: grpc.serialize<users_pb.User>;
-    responseDeserialize: grpc.deserialize<users_pb.User>;
+    responseSerialize: grpc.serialize<users_pb.UsersList>;
+    responseDeserialize: grpc.deserialize<users_pb.UsersList>;
 }
 
 export const UsersService: IUsersService;
 
 export interface IUsersServer {
-    getUsers: grpc.handleServerStreamingCall<google_protobuf_empty_pb.Empty, users_pb.User>;
+    getUsers: grpc.handleUnaryCall<google_protobuf_empty_pb.Empty, users_pb.UsersList>;
 }
 
 export interface IUsersClient {
-    getUsers(request: google_protobuf_empty_pb.Empty, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<users_pb.User>;
-    getUsers(request: google_protobuf_empty_pb.Empty, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<users_pb.User>;
+    getUsers(request: google_protobuf_empty_pb.Empty, callback: (error: grpc.ServiceError | null, response: users_pb.UsersList) => void): grpc.ClientUnaryCall;
+    getUsers(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: users_pb.UsersList) => void): grpc.ClientUnaryCall;
+    getUsers(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: users_pb.UsersList) => void): grpc.ClientUnaryCall;
 }
 
 export class UsersClient extends grpc.Client implements IUsersClient {
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
-    public getUsers(request: google_protobuf_empty_pb.Empty, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<users_pb.User>;
-    public getUsers(request: google_protobuf_empty_pb.Empty, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<users_pb.User>;
+    public getUsers(request: google_protobuf_empty_pb.Empty, callback: (error: grpc.ServiceError | null, response: users_pb.UsersList) => void): grpc.ClientUnaryCall;
+    public getUsers(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: users_pb.UsersList) => void): grpc.ClientUnaryCall;
+    public getUsers(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: users_pb.UsersList) => void): grpc.ClientUnaryCall;
 }

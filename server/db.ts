@@ -15,7 +15,7 @@ function duplicateArray<T>(data: T[], nbDuplicates: number): T[] {
 
 import dataQ from './corrected_hotels.json';
 console.log('duplication');
-const data = duplicateArray(dataQ, 4);
+const data = duplicateArray(dataQ, 3);
 console.log(data?.length);
 export function hotelToClass(hotelData: any): User {
   const hotel = new User();

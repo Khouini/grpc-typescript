@@ -60,7 +60,10 @@ message CancellationPolicy {
     int32 amount = 2;
 }
 
+message UsersList {
+    repeated User users = 1; // List of users
+}
 
 service Users {
-    rpc GetUsers(google.protobuf.Empty) returns (stream User) {};
-} 
+    rpc GetUsers(google.protobuf.Empty) returns (UsersList);
+}

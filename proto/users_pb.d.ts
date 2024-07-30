@@ -264,3 +264,26 @@ export namespace CancellationPolicy {
         amount: number,
     }
 }
+
+export class UsersList extends jspb.Message { 
+    clearUsersList(): void;
+    getUsersList(): Array<User>;
+    setUsersList(value: Array<User>): UsersList;
+    addUsers(value?: User, index?: number): User;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): UsersList.AsObject;
+    static toObject(includeInstance: boolean, msg: UsersList): UsersList.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: UsersList, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): UsersList;
+    static deserializeBinaryFromReader(message: UsersList, reader: jspb.BinaryReader): UsersList;
+}
+
+export namespace UsersList {
+    export type AsObject = {
+        usersList: Array<User.AsObject>,
+    }
+}
